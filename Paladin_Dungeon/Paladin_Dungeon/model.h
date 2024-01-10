@@ -19,6 +19,7 @@ typedef struct {
     int energy; // cost per hit or spell
     int stamina; // amount of actions to choose per round
     int mental;
+    int spellPower;
 } character;
 
 typedef struct {
