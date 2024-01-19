@@ -1,10 +1,3 @@
-//
-//  model.h
-//  Paladin_Dungeon
-//
-//  Created by Арсентий Халимовский on 06.01.2024.
-//
-
 #ifndef model_h
 #define model_h
 
@@ -27,8 +20,8 @@ typedef struct {
 
 typedef struct {
     char name[100];
-    int minAttack;
-    int maxAttack;
+    int minDamage;
+    int maxDamage;
     int defence;
     int currentHealth;
     int maxHealth;
@@ -40,11 +33,25 @@ typedef struct {
     int maxStamina;
     int currentMentalHealth;
     int maxMentalHealth;
-    int spellPower; // should be placed to the attributes;
     int currentLevel;
     int currentExperience;
     int experienceForLevel;
 } hero;
+
+typedef struct {
+    int strength;
+    int intellect;
+    int vitality;
+    int agility;
+} attributes;
+
+typedef struct {
+    int armorPenetration;
+    int spellPower;
+    int criticalStrike;
+    int armor;
+    int weaponDamage;
+} effects;
 
 typedef struct {
     char name[100];
