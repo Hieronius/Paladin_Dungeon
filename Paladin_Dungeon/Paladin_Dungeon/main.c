@@ -36,6 +36,8 @@ int main(int argc, char **argv) {
     
     // system ("/bin/stty raw"); // allows to avoid pressing "Enter" button to get input hotkeys
     
+    // MARK: Current problem - crush of the hotkey when the hero reach level 2
+    
     bool isAlive = true;
     int currentStage = 1; // current game level
     int enemiesPerLevel = 5;
@@ -126,15 +128,15 @@ int main(int argc, char **argv) {
                 }
                 roundCounter++;
             }
-            sleep(2);
+            // sleep(2);
             roundCounter = 0;
         }
         if (isAlive) {
             printf("%sStage %d has been cleared!%s\n", YELLOW, currentStage, WHITE);
-            printf("Enter any character and press \"Enter\" to start a new stage\n"); // should be fixed
+            // printf("Enter any character and press \"Enter\" to start a new stage\n"); // should be fixed
             currentStage += 1;
             enemiesPerLevel += 5;
-            scanf("%c", &action); // avoid /n for action variable
+//             scanf("%c", &action); // avoid /n for action variable
         } else {
             printf("%sGame over!%s\n", RED, WHITE);
             break;
@@ -179,7 +181,7 @@ void startGame(bool *isAlive) {
     printf("Let's start the game\n");
     *isAlive = true;
     scanf("%c", &start);
-    sleep(1);
+    // sleep(1);
 }
 
 void moveToEnemy(char hotKey) {
@@ -194,39 +196,39 @@ void moveToEnemy(char hotKey) {
     
     printf("Prepare to battle, the enemy...\n");
     scanf("%c", &hotKey); // remove \n from the getchar() func
-    sleep(1);
+    // sleep(1);
 }
 
 void attackEnemy(hero *attacker, enemy *target) {
-    sleep(1);
+    // sleep(1);
     printf("%s strikes %s and makes %s%d%s damage\n", attacker->name, target->name, RED, attacker->minDamage, WHITE);
     target->health = target->health - attacker->minDamage;
     printf("%s now has %s%d%s points of health\n", target->name, RED, target->health, WHITE);
 }
 
 void attackHero(enemy *attacker, hero *target) {
-    sleep(1);
+    // sleep(1);
     printf("%s strikes %s and makes %s%d%s damage\n", attacker->name, target->name, RED, attacker->attack, WHITE);
     target->currentHealth = target->currentHealth - attacker->attack;
     printf("%s now has %s%d%s points of health\n", target->name, RED, target->currentHealth, WHITE);
 }
 
 void heal(hero *healer) {
-    sleep(1);
+    // sleep(1);
     healer->currentMana -= 10;
     healer->currentHealth += 30;
     printf("%s heals himself for %s%d%s health points and now have %s%d%s amount of health and %s%d%s points     of mana\n", healer->name, GREEN, 30, WHITE, GREEN, healer->currentHealth, WHITE, CYAN, healer->currentMana, WHITE);
 }
 
 void magic(hero *caster, enemy *target) {
-    sleep(1);
+    // sleep(1);
     caster->currentMana -= 10;
     target->health -= 30;
     printf("%s casts the spell of holy fire on %s and deals %s%d%s damage. Now %s has %s%d%s amount of mana and %s has %s%d%s amount of health\n", caster->name, target->name, BLUE, 30, WHITE,  caster->name, CYAN, caster->currentMana, WHITE,  target->name, RED, target->health, WHITE);
 }
 
 enemy getEnemy(enemy *array) {
-    sleep(1);
+    // sleep(1);
     int n;
     time_t t;
     srand((unsigned)time(&t)); // this constructions is working but i still can't get it
