@@ -10,6 +10,9 @@ WHITE=\x1b[0m
 Paladin_Dungeon:
 	gcc main.c -o Paladin_Dungeon
 	
+run:
+	./Paladin_Dungeon
+	
 clean:
 	rm -rf *.o
 	rm -rf Paladin_Dungeon
