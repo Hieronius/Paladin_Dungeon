@@ -7,6 +7,8 @@
 #include "model.h"
 #include <unistd.h>
 #include <time.h>
+#include <termios.h>
+
 
 #define GREEN "\x1b[32m"
 #define BLACK "\x1b[30m"
@@ -32,11 +34,27 @@ void getLevel(hero *hero);
 enemy getEnemy(enemy *array);
 hero getHero(void);
 
+// Function to enable non-blocking input
+void enableRawMode() {
+    struct termios raw;
+    tcgetattr(STDIN_FILENO, &raw);
+    raw.c_lflag &= ~(ECHO | ICANON);
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+}
+
+// Function to disable raw mode
+void disableRawMode() {
+    struct termios raw;
+    tcgetattr(STDIN_FILENO, &raw);
+    raw.c_lflag |= (ECHO | ICANON);
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+}
+
+
+
 int main(int argc, char **argv) {
     
-    // system ("/bin/stty raw"); // allows to avoid pressing "Enter" button to get input hotkeys
-    
-    // MARK: Current problem - crush of the hotkey when the hero reach level 2
+    enableRawMode(); // allows to avoid pressing "Enter" button to get input hotkeys
     
     bool isAlive = true;
     int currentStage = 1; // current game level
@@ -80,12 +98,12 @@ int main(int argc, char **argv) {
                 printf("Enter %s\"A/a\"%s to hit the enemy, %s\"H/h\"%s to heal yourself or %s\"M/m\"%s to cast a spell\n", YELLOW, WHITE, YELLOW, WHITE, YELLOW, WHITE);
                 
                 action = getchar();
-                
+                // action = getch();
                 while (action != 'A' && action != 'a' &&
                        action != 'H' && action != 'h' &&
                        action != 'M' && action != 'm') {
                     
-                    scanf("%c", &action);
+                    // scanf("%c", &action);
                     printf("try again\n");
                     action = getchar();
                 }
@@ -93,17 +111,20 @@ int main(int argc, char **argv) {
                 if (action == 'A' || action == 'a') {
                     printf("Successful hit!\n");
                     attackEnemy(&paladin, &enemy);
-                    scanf("%c", &action); // remove /n from getchar()
+                    // system("/bin/stty cooked");
+                    // scanf("%c", &action); // remove /n from getchar()
 
                 } else if (action == 'H' || action == 'h') {
                     printf("Successful healing!\n");
                     heal(&paladin);
-                    scanf("%c", &action); // remove /n from getchar()
+                    // system("/bin/stty cooked");
+                    // scanf("%c", &action); // remove /n from getchar()
 
                 } else if (action == 'M' || action == 'm') {
                     printf("Successful casting!\n");
+                    // system("/bin/stty cooked");
                     magic(&paladin, &enemy);
-                    scanf("%c", &action); // remove /n from getchar()
+                    // scanf("%c", &action); // remove /n from getchar()
 
                 } else {
                     printf("wrong command\n");
@@ -142,6 +163,7 @@ int main(int argc, char **argv) {
             break;
         }
     }
+    disableRawMode(); // removes the effect of enableRawMode()
     return 0;
 }
 
@@ -174,13 +196,14 @@ void startGame(bool *isAlive) {
     start = getchar();
     
     while (start != 'S' && start != 's') {
-        scanf("%c", &start);
+        // scanf("%c", &start);
         printf("Let's try again\n");
         start = getchar();
     }
     printf("Let's start the game\n");
     *isAlive = true;
-    scanf("%c", &start);
+    // scanf("%c", &start);
+    // system("/bin/stty cooked");
     // sleep(1);
 }
 
@@ -189,13 +212,14 @@ void moveToEnemy(char hotKey) {
     hotKey = getchar();
     
     while (hotKey != 'M' && hotKey != 'm') {
-        scanf("%c", &hotKey);
+        // scanf("%c", &hotKey);
         printf("Let's try again\n");
         hotKey = getchar();
     }
     
     printf("Prepare to battle, the enemy...\n");
-    scanf("%c", &hotKey); // remove \n from the getchar() func
+    // scanf("%c", &hotKey); // remove \n from the getchar() func
+    // system("/bin/stty cooked");
     // sleep(1);
 }
 
