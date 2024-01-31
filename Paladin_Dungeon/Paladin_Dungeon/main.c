@@ -1,30 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <math.h>
-#include <ncurses.h>
-#include <unistd.h>
-#include <time.h>
-#include <termios.h>
-#include "colors.h"
-#include "model.h"
+#include "libraries.h"
 
 #define ARRAY_SIZE 5
 
-void attackEnemy(hero *attacker, enemy *target);
-void attackHero(enemy *attacker, hero *target);
-void block(hero *character);
-void heal(hero *healer);
-void magic(hero *caster, enemy *target);
-void useObject(hero *user); // I need an inventory for it
-void startGame(bool *isAlive);
-void moveToEnemy(char hotKey);
-void getLevel(hero *hero);
-void enableRawMode(void);
-void disableRawMode(void);
-enemy getEnemy(enemy *array);
-hero getHero(void);
+// MARK: Current task N1 - implementation of accuracy ration and adding this new mechanics to the attack/spells functions
+
+void getArrayOfEnemies(enemy *array);
 
 int main(int argc, char **argv) {
     
@@ -32,9 +12,7 @@ int main(int argc, char **argv) {
     
     bool isAlive = true;
     int currentStage = 1; // current game level
-    int enemiesPerLevel = 5;
-    
-    int temp = 10; // without this variable "enemiesPerLevel" is always 0 inside the while loop
+    int enemiesPerLevel = ARRAY_SIZE;
     
     hero paladin = getHero();
     
@@ -43,8 +21,10 @@ int main(int argc, char **argv) {
     enemy ghoul = {"Ghoul", 8, 0, 30, 15};
     enemy wolf = {"Mad Wolf", 9, 0, 35, 20};
     enemy ork = {"Ork", 10, 0, 40, 25};
-    
+
     enemy arrayOfCharacters[ARRAY_SIZE] = {goblin, skeleton, ghoul, wolf, ork};
+    
+    // MARK: - Game starts here
     
     startGame(&isAlive);
 
@@ -136,6 +116,8 @@ int main(int argc, char **argv) {
     disableRawMode(); // removes the effect of enableRawMode()
     return 0;
 }
+
+// MARK: - Functions
 
 hero getHero(void) {
     hero paladin = {
@@ -258,4 +240,3 @@ void disableRawMode() {
     raw.c_lflag |= (ECHO | ICANON);
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
-
