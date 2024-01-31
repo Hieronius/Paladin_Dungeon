@@ -4,21 +4,11 @@
 #include <stdbool.h>
 #include <math.h>
 #include <ncurses.h>
-#include "model.h"
 #include <unistd.h>
 #include <time.h>
 #include <termios.h>
-
-
-#define GREEN "\x1b[32m"
-#define BLACK "\x1b[30m"
-#define RED "\x1b[31m"
-#define BLUE "\x1b[34m"
-#define MAGENTA "\x1b[35m"
-#define CYAN "\x1b[36m"
-#define YELLOW "\x1b[33m"
-#define WHITE "\x1b[0m"
-#define SOUND "\a"
+#include "colors.h"
+#include "model.h"
 
 #define ARRAY_SIZE 5
 
@@ -31,26 +21,10 @@ void useObject(hero *user); // I need an inventory for it
 void startGame(bool *isAlive);
 void moveToEnemy(char hotKey);
 void getLevel(hero *hero);
+void enableRawMode(void);
+void disableRawMode(void);
 enemy getEnemy(enemy *array);
 hero getHero(void);
-
-// Function to enable non-blocking input
-void enableRawMode() {
-    struct termios raw;
-    tcgetattr(STDIN_FILENO, &raw);
-    raw.c_lflag &= ~(ECHO | ICANON);
-    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
-}
-
-// Function to disable raw mode
-void disableRawMode() {
-    struct termios raw;
-    tcgetattr(STDIN_FILENO, &raw);
-    raw.c_lflag |= (ECHO | ICANON);
-    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
-}
-
-
 
 int main(int argc, char **argv) {
     
@@ -80,7 +54,7 @@ int main(int argc, char **argv) {
         
         int roundCounter = 0;
 
-        char move; // each iteration of the character array it's starts from here
+        char move = '\0'; // each iteration of the character array it's starts from here
         
         char action; // i can use one variable for all kinds of actions. It's working. I can just add a few of them or few of scanf methods if our paladin has move than one action per round
         
@@ -98,12 +72,11 @@ int main(int argc, char **argv) {
                 printf("Enter %s\"A/a\"%s to hit the enemy, %s\"H/h\"%s to heal yourself or %s\"M/m\"%s to cast a spell\n", YELLOW, WHITE, YELLOW, WHITE, YELLOW, WHITE);
                 
                 action = getchar();
-                // action = getch();
+
                 while (action != 'A' && action != 'a' &&
                        action != 'H' && action != 'h' &&
                        action != 'M' && action != 'm') {
                     
-                    // scanf("%c", &action);
                     printf("try again\n");
                     action = getchar();
                 }
@@ -111,20 +84,14 @@ int main(int argc, char **argv) {
                 if (action == 'A' || action == 'a') {
                     printf("Successful hit!\n");
                     attackEnemy(&paladin, &enemy);
-                    // system("/bin/stty cooked");
-                    // scanf("%c", &action); // remove /n from getchar()
 
                 } else if (action == 'H' || action == 'h') {
                     printf("Successful healing!\n");
                     heal(&paladin);
-                    // system("/bin/stty cooked");
-                    // scanf("%c", &action); // remove /n from getchar()
 
                 } else if (action == 'M' || action == 'm') {
                     printf("Successful casting!\n");
-                    // system("/bin/stty cooked");
                     magic(&paladin, &enemy);
-                    // scanf("%c", &action); // remove /n from getchar()
 
                 } else {
                     printf("wrong command\n");
@@ -154,10 +121,13 @@ int main(int argc, char **argv) {
         }
         if (isAlive) {
             printf("%sStage %d has been cleared!%s\n", YELLOW, currentStage, WHITE);
-            // printf("Enter any character and press \"Enter\" to start a new stage\n"); // should be fixed
             currentStage += 1;
             enemiesPerLevel += 5;
-//             scanf("%c", &action); // avoid /n for action variable
+            paladin.currentHealth = paladin.maxHealth;
+            paladin.currentMana = paladin.maxMana;
+            paladin.currentEnergy = paladin.maxEnergy;
+            paladin.currentStamina = paladin.currentStamina;
+
         } else {
             printf("%sGame over!%s\n", RED, WHITE);
             break;
@@ -196,14 +166,11 @@ void startGame(bool *isAlive) {
     start = getchar();
     
     while (start != 'S' && start != 's') {
-        // scanf("%c", &start);
         printf("Let's try again\n");
         start = getchar();
     }
     printf("Let's start the game\n");
     *isAlive = true;
-    // scanf("%c", &start);
-    // system("/bin/stty cooked");
     // sleep(1);
 }
 
@@ -212,14 +179,11 @@ void moveToEnemy(char hotKey) {
     hotKey = getchar();
     
     while (hotKey != 'M' && hotKey != 'm') {
-        // scanf("%c", &hotKey);
         printf("Let's try again\n");
         hotKey = getchar();
     }
     
     printf("Prepare to battle, the enemy...\n");
-    // scanf("%c", &hotKey); // remove \n from the getchar() func
-    // system("/bin/stty cooked");
     // sleep(1);
 }
 
@@ -273,10 +237,25 @@ void getLevel(hero *hero) {
     hero->currentEnergy = hero->maxEnergy;
     hero->maxStamina += 10;
     hero->currentStamina = hero->maxStamina;
+    hero->currentMentalHealth = hero->maxMentalHealth;
     hero->currentLevel += 1;
     hero->experienceForLevel += 20;
     printf("LevelUp! Hero has %s%d%s level!\n", YELLOW, hero->currentLevel, WHITE);
 }
 
+// Function to enable non-blocking input
+void enableRawMode() {
+    struct termios raw;
+    tcgetattr(STDIN_FILENO, &raw);
+    raw.c_lflag &= ~(ECHO | ICANON);
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+}
 
+// Function to disable non-blocking input
+void disableRawMode() {
+    struct termios raw;
+    tcgetattr(STDIN_FILENO, &raw);
+    raw.c_lflag |= (ECHO | ICANON);
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+}
 
