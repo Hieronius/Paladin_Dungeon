@@ -16,7 +16,7 @@ typedef struct {
     int currentExperience;
     int experiencePerLevel;
     int experiencePerKill;
-} character;
+} Character;
 
 typedef struct {
     char name[100];
@@ -36,14 +36,14 @@ typedef struct {
     int currentLevel;
     int currentExperience;
     int experienceForLevel;
-} hero;
+} Hero;
 
 typedef struct {
     int strength;
     int intellect;
     int vitality;
     int agility;
-} attributes;
+} Attributes;
 
 typedef struct {
     int armorPenetration;
@@ -51,7 +51,7 @@ typedef struct {
     int criticalStrike;
     int armor;
     int weaponDamage;
-} effects;
+} Effects;
 
 typedef struct {
     char name[100];
@@ -59,32 +59,32 @@ typedef struct {
     int defence;
     int health;
     int experiencePerKill;
-} enemy;
+} Enemy;
 
 typedef struct {
     int capacity;
     char *inventory;
     int weight;
-} storage;
+} Storage;
 
 typedef struct {
     char *healingSpell;
     char *defensiveSpell;
     char *attackSpell;
     char *meditationSpeel;
-} spells;
+} Spells;
 
 typedef struct {
     char *attack;
     char *block;
     char *charge;
     char *parry;
-} skills;
+} Skills;
 
 typedef struct {
     char *open;
     char *move;
     char *use;
-} actions;
+} Actions;
 
 #endif /* model_h */
