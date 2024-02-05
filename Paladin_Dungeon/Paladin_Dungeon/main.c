@@ -4,8 +4,6 @@
 
 // MARK: Current task N1 - implementation of accuracy ration and adding this new mechanics to the attack/spells functions
 
-void getArrayOfEnemies(enemy *array);
-
 int main(int argc, char **argv) {
     
     enableRawMode(); // allows to avoid pressing "Enter" button to get input hotkeys
@@ -14,15 +12,15 @@ int main(int argc, char **argv) {
     int currentStage = 1; // current game level
     int enemiesPerLevel = ARRAY_SIZE;
     
-    hero paladin = getHero();
+    Hero paladin = getHero();
     
-    enemy goblin = {"Goblin", 5, 0, 20, 5};
-    enemy skeleton = {"Skeleton", 7, 0, 25, 10};
-    enemy ghoul = {"Ghoul", 8, 0, 30, 15};
-    enemy wolf = {"Mad Wolf", 9, 0, 35, 20};
-    enemy ork = {"Ork", 10, 0, 40, 25};
+    Enemy goblin = {"Goblin", 5, 0, 20, 5};
+    Enemy skeleton = {"Skeleton", 7, 0, 25, 10};
+    Enemy ghoul = {"Ghoul", 8, 0, 30, 15};
+    Enemy wolf = {"Mad Wolf", 9, 0, 35, 20};
+    Enemy ork = {"Ork", 10, 0, 40, 25};
 
-    enemy arrayOfCharacters[ARRAY_SIZE] = {goblin, skeleton, ghoul, wolf, ork};
+    Enemy arrayOfCharacters[ARRAY_SIZE] = {goblin, skeleton, ghoul, wolf, ork};
     
     // MARK: - Game starts here
     
@@ -38,7 +36,7 @@ int main(int argc, char **argv) {
         
         char action; // i can use one variable for all kinds of actions. It's working. I can just add a few of them or few of scanf methods if our paladin has move than one action per round
         
-        enemy enemy; // there we should use our random function to generate a new enemy and pass to the while cycle
+        Enemy enemy; // there we should use our random function to generate a new enemy and pass to the while cycle
 
         for (int i = 0; i < enemiesPerLevel; i++) { // amount of rooms to explore
             
@@ -119,8 +117,8 @@ int main(int argc, char **argv) {
 
 // MARK: - Functions
 
-hero getHero(void) {
-    hero paladin = {
+Hero getHero(void) {
+    Hero paladin = {
         "Hieronius", // char name[100];
         100,         // int minAttack;
         100,         // int maxAttack;
@@ -169,35 +167,35 @@ void moveToEnemy(char hotKey) {
     // sleep(1);
 }
 
-void attackEnemy(hero *attacker, enemy *target) {
+void attackEnemy(Hero *attacker, Enemy *target) {
     // sleep(1);
     printf("%s strikes %s and makes %s%d%s damage\n", attacker->name, target->name, RED, attacker->minDamage, WHITE);
     target->health = target->health - attacker->minDamage;
     printf("%s now has %s%d%s points of health\n", target->name, RED, target->health, WHITE);
 }
 
-void attackHero(enemy *attacker, hero *target) {
+void attackHero(Enemy *attacker, Hero *target) {
     // sleep(1);
     printf("%s strikes %s and makes %s%d%s damage\n", attacker->name, target->name, RED, attacker->attack, WHITE);
     target->currentHealth = target->currentHealth - attacker->attack;
     printf("%s now has %s%d%s points of health\n", target->name, RED, target->currentHealth, WHITE);
 }
 
-void heal(hero *healer) {
+void heal(Hero *healer) {
     // sleep(1);
     healer->currentMana -= 10;
     healer->currentHealth += 30;
     printf("%s heals himself for %s%d%s health points and now have %s%d%s amount of health and %s%d%s points     of mana\n", healer->name, GREEN, 30, WHITE, GREEN, healer->currentHealth, WHITE, CYAN, healer->currentMana, WHITE);
 }
 
-void magic(hero *caster, enemy *target) {
+void magic(Hero *caster, Enemy *target) {
     // sleep(1);
     caster->currentMana -= 10;
     target->health -= 30;
     printf("%s casts the spell of holy fire on %s and deals %s%d%s damage. Now %s has %s%d%s amount of mana and %s has %s%d%s amount of health\n", caster->name, target->name, BLUE, 30, WHITE,  caster->name, CYAN, caster->currentMana, WHITE,  target->name, RED, target->health, WHITE);
 }
 
-enemy getEnemy(enemy *array) {
+Enemy getEnemy(Enemy *array) {
     // sleep(1);
     int n;
     time_t t;
@@ -207,7 +205,7 @@ enemy getEnemy(enemy *array) {
     return *(array + n);
 }
 
-void getLevel(hero *hero) {
+void getLevel(Hero *hero) {
     hero->currentExperience = 0;
     hero->minDamage += 2;
     hero->maxDamage += 2;

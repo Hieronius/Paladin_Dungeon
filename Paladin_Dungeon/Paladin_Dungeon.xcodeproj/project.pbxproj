@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DD76B60F2B2D5C9100AA12CE /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = DD76B60E2B2D5C9100AA12CE /* main.c */; };
+		DD8570E42B470679006B4E7B /* DrawGameBoard.c in Sources */ = {isa = PBXBuildFile; fileRef = DD8570E32B470679006B4E7B /* DrawGameBoard.c */; };
+		DD97BBBF2B4C3D3E00CEDE3B /* CurrentProject.c in Sources */ = {isa = PBXBuildFile; fileRef = DD97BBBE2B4C3D3E00CEDE3B /* CurrentProject.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,12 @@
 /* Begin PBXFileReference section */
 		DD76B60B2B2D5C9100AA12CE /* Paladin_Dungeon */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Paladin_Dungeon; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD76B60E2B2D5C9100AA12CE /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		DD8570E32B470679006B4E7B /* DrawGameBoard.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = DrawGameBoard.c; sourceTree = "<group>"; };
+		DD8DEA1E2B6A24FF0098AF62 /* colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = colors.h; sourceTree = "<group>"; };
+		DD8DEA212B6A27BE0098AF62 /* libraries.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libraries.h; sourceTree = "<group>"; };
+		DD8DEA222B6A28F40098AF62 /* functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = functions.h; sourceTree = "<group>"; };
+		DD9219072B49705800CFFF25 /* model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = model.h; sourceTree = "<group>"; };
+		DD97BBBE2B4C3D3E00CEDE3B /* CurrentProject.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CurrentProject.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +66,22 @@
 			isa = PBXGroup;
 			children = (
 				DD76B60E2B2D5C9100AA12CE /* main.c */,
+				DD8DEA222B6A28F40098AF62 /* functions.h */,
+				DD9219072B49705800CFFF25 /* model.h */,
+				DD8DEA1E2B6A24FF0098AF62 /* colors.h */,
+				DD8DEA212B6A27BE0098AF62 /* libraries.h */,
+				DD932F9E2B56CFB0007014E7 /* Other */,
 			);
 			path = Paladin_Dungeon;
+			sourceTree = "<group>";
+		};
+		DD932F9E2B56CFB0007014E7 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				DD8570E32B470679006B4E7B /* DrawGameBoard.c */,
+				DD97BBBE2B4C3D3E00CEDE3B /* CurrentProject.c */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,7 +141,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD8570E42B470679006B4E7B /* DrawGameBoard.c in Sources */,
 				DD76B60F2B2D5C9100AA12CE /* main.c in Sources */,
+				DD97BBBF2B4C3D3E00CEDE3B /* CurrentProject.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +262,7 @@
 		DD76B6132B2D5C9100AA12CE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7YW3V66545;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -248,6 +273,7 @@
 		DD76B6142B2D5C9100AA12CE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7YW3V66545;
 				ENABLE_HARDENED_RUNTIME = YES;
