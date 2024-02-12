@@ -1,10 +1,3 @@
-//
-//  functions.h
-//  Paladin_Dungeon
-//
-//  Created by Арсентий Халимовский on 31.01.2024.
-//
-
 #ifndef functions_h
 #define functions_h
 

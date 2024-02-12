@@ -2,7 +2,7 @@
 
 #define ARRAY_SIZE 5
 
-// MARK: Current task N1 - implementation of accuracy ration and adding this new mechanics to the attack/spells functions
+// MARK: Current task N1 - implementation of accuracy rating and adding this new mechanics to the attack/spells functions
 
 int main(int argc, char **argv) {
     
@@ -26,6 +26,7 @@ int main(int argc, char **argv) {
     
     startGame(&isAlive);
 
+    // can be implemented in custom func "void gameLoop (bool *isAlive)"
     while (isAlive) {
         
         printf("%d level has begun\n", currentStage);
