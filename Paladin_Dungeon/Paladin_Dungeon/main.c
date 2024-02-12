@@ -210,7 +210,7 @@ void heal(Hero *healer) {
     // sleep(1);
     healer->currentMana -= 10;
     healer->currentHealth += healer->spellPower;
-    printf("%s heals himself for %s%d%s health points and now have %s%d%s amount of health and %s%d%s points     of mana\n", healer->name, GREEN, 30, WHITE, GREEN, healer->currentHealth, WHITE, CYAN, healer->currentMana, WHITE);
+    printf("%s heals himself for %s%d%s health points and now have %s%d%s amount of health and %s%d%s points     of mana\n", healer->name, GREEN, healer->spellPower, WHITE, GREEN, healer->currentHealth, WHITE, CYAN, healer->currentMana, WHITE);
 }
 
 void useSpell(Hero *caster, Enemy *target) {
@@ -222,7 +222,7 @@ void useSpell(Hero *caster, Enemy *target) {
     if (calculateHitChance(caster->accuracy)) {
         target->health -= caster->spellPower;
         printf("Successful casting!\n");
-        printf("%s casts the spell of holy fire on %s and deals %s%d%s damage. Now %s has %s%d%s amount of mana and %s has %s%d%s amount of health\n", caster->name, target->name, BLUE, 30, WHITE,  caster->name, CYAN, caster->currentMana, WHITE,  target->name, RED, target->health, WHITE);
+        printf("%s casts the spell of holy fire on %s and deals %s%d%s damage. Now %s has %s%d%s amount of mana and %s has %s%d%s amount of health\n", caster->name, target->name, BLUE, caster->spellPower, WHITE,  caster->name, CYAN, caster->currentMana, WHITE,  target->name, RED, target->health, WHITE);
     } else {
         printf("%s %smissed!%s\n", caster->name, RED, WHITE);
     }
