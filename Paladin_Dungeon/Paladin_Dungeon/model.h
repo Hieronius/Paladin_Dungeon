@@ -22,6 +22,7 @@ typedef struct Hero {
     char name[100];
     int minDamage;
     int maxDamage;
+    int accuracy;
     int defence;
     int currentHealth;
     int maxHealth;
@@ -56,6 +57,7 @@ typedef struct {
 typedef struct {
     char name[100];
     int attack;
+    int accuracy;
     int defence;
     int health;
     int experiencePerKill;
