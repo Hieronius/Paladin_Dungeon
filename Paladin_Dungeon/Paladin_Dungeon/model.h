@@ -41,7 +41,8 @@ typedef struct {
 
 typedef struct {
     char name[100];
-    int attack;
+    int minDamage;
+    int maxDamage;
     int accuracy;
     int defence;
     int health;
