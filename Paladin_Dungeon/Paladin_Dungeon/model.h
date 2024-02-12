@@ -3,21 +3,6 @@
 
 #include <stdio.h>
 
-typedef struct Character{
-    char name[100];
-    int attack;
-    int defence;
-    int health;
-    int mana;
-    int energy; // cost per hit or spell
-    int stamina; // amount of actions to choose per round
-    int mentalHealth;
-    int spellPower;
-    int currentExperience;
-    int experiencePerLevel;
-    int experiencePerKill;
-} Character;
-
 typedef struct Hero {
     char name[100];
     int minDamage;
