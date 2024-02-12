@@ -14,11 +14,11 @@ int main(int argc, char **argv) {
     
     Hero paladin = getHero();
     
-    Enemy goblin = {"Goblin", 5, 75, 0, 20, 5};
-    Enemy skeleton = {"Skeleton", 7, 75, 0, 25, 10};
-    Enemy ghoul = {"Ghoul", 8, 75, 0, 30, 15};
-    Enemy wolf = {"Mad Wolf", 9, 75, 0, 35, 20};
-    Enemy ork = {"Ork", 10, 75, 0, 40, 25};
+    Enemy goblin = {"Goblin", 5, 10, 75, 0, 20, 5};
+    Enemy skeleton = {"Skeleton", 7, 12, 75, 0, 25, 10};
+    Enemy ghoul = {"Ghoul", 10, 15, 75, 0, 30, 15};
+    Enemy wolf = {"Mad Wolf", 12, 17, 75, 0, 35, 20};
+    Enemy ork = {"Ork", 15, 20, 75, 0, 40, 25};
 
     Enemy arrayOfCharacters[ARRAY_SIZE] = {goblin, skeleton, ghoul, wolf, ork};
     
@@ -171,14 +171,19 @@ int calculateHitChance(int accuracy) {
     return (rand() % 100) < accuracy;
 }
 
+int calculateDamage(int minDamage, int maxDamage) {
+    return (rand() % (maxDamage - minDamage + 1) + minDamage);
+}
+
 void attackEnemy(Hero *attacker, Enemy *target) {
     // sleep(1);
     srand(time(NULL));
     
     if (calculateHitChance(attacker->accuracy)) {
         printf("Successful hit!\n");
-        printf("%s strikes %s and makes %s%d%s damage\n", attacker->name, target->name, RED, attacker->minDamage, WHITE);
-        target->health = target->health - attacker->minDamage;
+        int damageDealt = calculateDamage(attacker->minDamage, attacker->maxDamage);
+        printf("%s strikes %s and makes %s%d%s damage\n", attacker->name, target->name, RED, damageDealt, WHITE);
+        target->health = target->health - damageDealt;
         printf("%s now has %s%d%s points of health\n", target->name, RED, target->health, WHITE);
     } else {
         printf("%s %smissed!%s\n", attacker->name, RED, WHITE);
@@ -191,8 +196,9 @@ void attackHero(Enemy *attacker, Hero *target) {
     srand(time(NULL));
     
     if (calculateHitChance(attacker->accuracy)) {
-        printf("%s strikes %s and makes %s%d%s damage\n", attacker->name, target->name, RED, attacker->attack, WHITE);
-        target->currentHealth = target->currentHealth - attacker->attack;
+        int damageDealt = calculateDamage(attacker->minDamage, attacker->maxDamage);
+        printf("%s strikes %s and makes %s%d%s damage\n", attacker->name, target->name, RED, damageDealt, WHITE);
+        target->currentHealth = target->currentHealth - damageDealt;
         printf("%s now has %s%d%s points of health\n", target->name, RED, target->currentHealth, WHITE);
     } else {
         printf("The %s %smissed!%s\n", attacker->name, RED, WHITE);
