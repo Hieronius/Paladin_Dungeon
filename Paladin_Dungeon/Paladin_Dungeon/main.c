@@ -14,11 +14,11 @@ int main(int argc, char **argv) {
     
     Hero paladin = getHero();
     
-    Enemy goblin = {"Goblin", 5, 0, 20, 5};
-    Enemy skeleton = {"Skeleton", 7, 0, 25, 10};
-    Enemy ghoul = {"Ghoul", 8, 0, 30, 15};
-    Enemy wolf = {"Mad Wolf", 9, 0, 35, 20};
-    Enemy ork = {"Ork", 10, 0, 40, 25};
+    Enemy goblin = {"Goblin", 5, 75, 0, 20, 5};
+    Enemy skeleton = {"Skeleton", 7, 75, 0, 25, 10};
+    Enemy ghoul = {"Ghoul", 8, 75, 0, 30, 15};
+    Enemy wolf = {"Mad Wolf", 9, 75, 0, 35, 20};
+    Enemy ork = {"Ork", 10, 75, 0, 40, 25};
 
     Enemy arrayOfCharacters[ARRAY_SIZE] = {goblin, skeleton, ghoul, wolf, ork};
     
@@ -48,29 +48,27 @@ int main(int argc, char **argv) {
                 
                 printf("%s%d%s - round started\n", YELLOW, roundCounter, WHITE);
                 
-                printf("Enter %s\"A/a\"%s to hit the enemy, %s\"H/h\"%s to heal yourself or %s\"M/m\"%s to cast a spell\n", YELLOW, WHITE, YELLOW, WHITE, YELLOW, WHITE);
+                printf("Enter %s\"A/a\"%s to hit the enemy, %s\"H/h\"%s to heal yourself or %s\"S/s\"%s to cast a spell\n", YELLOW, WHITE, YELLOW, WHITE, YELLOW, WHITE);
                 
                 action = getchar();
 
                 while (action != 'A' && action != 'a' &&
                        action != 'H' && action != 'h' &&
-                       action != 'M' && action != 'm') {
+                       action != 'S' && action != 's') {
                     
                     printf("try again\n");
                     action = getchar();
                 }
                 
                 if (action == 'A' || action == 'a') {
-                    printf("Successful hit!\n");
                     attackEnemy(&paladin, &enemy);
 
                 } else if (action == 'H' || action == 'h') {
                     printf("Successful healing!\n");
                     heal(&paladin);
 
-                } else if (action == 'M' || action == 'm') {
-                    printf("Successful casting!\n");
-                    magic(&paladin, &enemy);
+                } else if (action == 'S' || action == 's') {
+                    useSpell(&paladin, &enemy);
 
                 } else {
                     printf("wrong command\n");
@@ -123,6 +121,7 @@ Hero getHero(void) {
         "Hieronius", // char name[100];
         100,         // int minAttack;
         100,         // int maxAttack;
+        75,          // int accuracy;
         100,         // int defence;
         1000,        // int currentHealth;
         1000,        // int maxHealth;
@@ -168,18 +167,36 @@ void moveToEnemy(char hotKey) {
     // sleep(1);
 }
 
+int calculateHitChance(int accuracy) {
+    return (rand() % 100) < accuracy;
+}
+
 void attackEnemy(Hero *attacker, Enemy *target) {
     // sleep(1);
-    printf("%s strikes %s and makes %s%d%s damage\n", attacker->name, target->name, RED, attacker->minDamage, WHITE);
-    target->health = target->health - attacker->minDamage;
-    printf("%s now has %s%d%s points of health\n", target->name, RED, target->health, WHITE);
+    srand(time(NULL));
+    
+    if (calculateHitChance(attacker->accuracy)) {
+        printf("Successful hit!\n");
+        printf("%s strikes %s and makes %s%d%s damage\n", attacker->name, target->name, RED, attacker->minDamage, WHITE);
+        target->health = target->health - attacker->minDamage;
+        printf("%s now has %s%d%s points of health\n", target->name, RED, target->health, WHITE);
+    } else {
+        printf("%s %smissed!%s\n", attacker->name, RED, WHITE);
+    }
+    
 }
 
 void attackHero(Enemy *attacker, Hero *target) {
     // sleep(1);
-    printf("%s strikes %s and makes %s%d%s damage\n", attacker->name, target->name, RED, attacker->attack, WHITE);
-    target->currentHealth = target->currentHealth - attacker->attack;
-    printf("%s now has %s%d%s points of health\n", target->name, RED, target->currentHealth, WHITE);
+    srand(time(NULL));
+    
+    if (calculateHitChance(attacker->accuracy)) {
+        printf("%s strikes %s and makes %s%d%s damage\n", attacker->name, target->name, RED, attacker->attack, WHITE);
+        target->currentHealth = target->currentHealth - attacker->attack;
+        printf("%s now has %s%d%s points of health\n", target->name, RED, target->currentHealth, WHITE);
+    } else {
+        printf("The %s %smissed!%s\n", attacker->name, RED, WHITE);
+    }
 }
 
 void heal(Hero *healer) {
@@ -189,11 +206,19 @@ void heal(Hero *healer) {
     printf("%s heals himself for %s%d%s health points and now have %s%d%s amount of health and %s%d%s points     of mana\n", healer->name, GREEN, 30, WHITE, GREEN, healer->currentHealth, WHITE, CYAN, healer->currentMana, WHITE);
 }
 
-void magic(Hero *caster, Enemy *target) {
+void useSpell(Hero *caster, Enemy *target) {
     // sleep(1);
+    srand(time(NULL));
+    
     caster->currentMana -= 10;
-    target->health -= 30;
-    printf("%s casts the spell of holy fire on %s and deals %s%d%s damage. Now %s has %s%d%s amount of mana and %s has %s%d%s amount of health\n", caster->name, target->name, BLUE, 30, WHITE,  caster->name, CYAN, caster->currentMana, WHITE,  target->name, RED, target->health, WHITE);
+    
+    if (calculateHitChance(caster->accuracy)) {
+        target->health -= 30;
+        printf("Successful casting!\n");
+        printf("%s casts the spell of holy fire on %s and deals %s%d%s damage. Now %s has %s%d%s amount of mana and %s has %s%d%s amount of health\n", caster->name, target->name, BLUE, 30, WHITE,  caster->name, CYAN, caster->currentMana, WHITE,  target->name, RED, target->health, WHITE);
+    } else {
+        printf("%s %smissed!%s\n", caster->name, RED, WHITE);
+    }
 }
 
 Enemy getEnemy(Enemy *array) {
@@ -210,6 +235,7 @@ void getLevel(Hero *hero) {
     hero->currentExperience = 0;
     hero->minDamage += 2;
     hero->maxDamage += 2;
+    hero->accuracy += 1;
     hero->maxHealth += 20;
     hero->currentHealth = hero->maxHealth;
     hero->maxMana += 10;
