@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-typedef struct {
+typedef struct Character{
     char name[100];
     int attack;
     int defence;
@@ -18,7 +18,7 @@ typedef struct {
     int experiencePerKill;
 } Character;
 
-typedef struct {
+typedef struct Hero {
     char name[100];
     int minDamage;
     int maxDamage;
