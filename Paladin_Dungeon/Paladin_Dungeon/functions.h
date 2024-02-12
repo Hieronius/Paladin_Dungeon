@@ -12,6 +12,7 @@ void moveToEnemy(char hotKey);
 void getLevel(Hero *hero);
 void enableRawMode(void);
 void disableRawMode(void);
+int calculateHitChance(int accuracy);
 Enemy getEnemy(Enemy *array);
 Hero getHero(void);
 
