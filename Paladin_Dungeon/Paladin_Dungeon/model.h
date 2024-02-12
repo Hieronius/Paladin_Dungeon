@@ -7,6 +7,7 @@ typedef struct Hero {
     char name[100];
     int minDamage;
     int maxDamage;
+    int spellPower;
     int accuracy;
     int defence;
     int currentHealth;

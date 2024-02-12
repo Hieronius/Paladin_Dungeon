@@ -121,6 +121,7 @@ Hero getHero(void) {
         "Hieronius", // char name[100];
         100,         // int minAttack;
         100,         // int maxAttack;
+        50,          // int spellPower;
         75,          // int accuracy;
         100,         // int defence;
         1000,        // int currentHealth;
@@ -208,7 +209,7 @@ void attackHero(Enemy *attacker, Hero *target) {
 void heal(Hero *healer) {
     // sleep(1);
     healer->currentMana -= 10;
-    healer->currentHealth += 30;
+    healer->currentHealth += healer->spellPower;
     printf("%s heals himself for %s%d%s health points and now have %s%d%s amount of health and %s%d%s points     of mana\n", healer->name, GREEN, 30, WHITE, GREEN, healer->currentHealth, WHITE, CYAN, healer->currentMana, WHITE);
 }
 
@@ -219,7 +220,7 @@ void useSpell(Hero *caster, Enemy *target) {
     caster->currentMana -= 10;
     
     if (calculateHitChance(caster->accuracy)) {
-        target->health -= 30;
+        target->health -= caster->spellPower;
         printf("Successful casting!\n");
         printf("%s casts the spell of holy fire on %s and deals %s%d%s damage. Now %s has %s%d%s amount of mana and %s has %s%d%s amount of health\n", caster->name, target->name, BLUE, 30, WHITE,  caster->name, CYAN, caster->currentMana, WHITE,  target->name, RED, target->health, WHITE);
     } else {
@@ -241,6 +242,7 @@ void getLevel(Hero *hero) {
     hero->currentExperience = 0;
     hero->minDamage += 2;
     hero->maxDamage += 2;
+    hero->spellPower += 3;
     hero->accuracy += 1;
     hero->maxHealth += 20;
     hero->currentHealth = hero->maxHealth;
