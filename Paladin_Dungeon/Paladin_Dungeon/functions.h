@@ -13,6 +13,7 @@ void getLevel(Hero *hero);
 void enableRawMode(void);
 void disableRawMode(void);
 int calculateHitChance(int accuracy);
+int calculateDefenceRate(int defence);
 Enemy getEnemy(Enemy *array);
 Hero getHero(void);
 
