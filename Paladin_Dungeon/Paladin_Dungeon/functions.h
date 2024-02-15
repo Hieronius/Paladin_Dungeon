@@ -14,6 +14,7 @@ void enableRawMode(void);
 void disableRawMode(void);
 int calculateHitChance(int accuracy);
 int calculateDefenceRate(int defence);
+int calculateCritChance(int critChance);
 Enemy getEnemy(Enemy *array);
 Hero getHero(void);
 
