@@ -15,6 +15,7 @@ void disableRawMode(void);
 int calculateHitChance(int accuracy);
 int calculateDefenceRate(int defence);
 int calculateCritChance(int critChance);
+int calculateArmorPenetrationRate(int armorPenetationRate);
 int calculateLuck(int luck);
 Enemy getEnemy(Enemy *array);
 Hero getHero(void);
